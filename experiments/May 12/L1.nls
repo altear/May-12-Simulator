@@ -1,0 +1,17 @@
+__includes [
+  "../../profiles/L1-profiles.nls"
+]
+
+to L1
+  let t-list n-values 2 [?]
+  let t-count 1
+  let k 5
+  
+  setup
+  
+  create-profiles1 10 [profiles-setup self k t-count t-list set color red]
+  create-profiles2 10 [profiles-setup self k t-count t-list set color cyan]
+  create-documents 20 [documents-setup self k t-count t-list set color grey]
+  
+  my-layout
+end

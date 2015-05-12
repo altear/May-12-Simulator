@@ -1,0 +1,31 @@
+
+
+;; MAKE-POPULATIONS PROCEDURE: Set the initial population of each breed
+;; as well as values belonging to each individual (ie tags)
+to exper
+  let t-list n-values 100 [?]
+  let t-count 2
+  let k 5
+  
+  
+  setup
+  create-frankensteins1 10 [frankensteins1-setup self k t-count t-list]
+  create-frankensteins2 10 [frankensteins2-setup self k t-count t-list]
+  create-benevolents 10 [benevolents-setup self k t-count t-list]
+  create-documents 50 [documents-setup self k (one-of n-values 20 [?]) t-list]
+  my-layout
+  
+  ask turtle-set breed-list frankensteins1 [set active? true]
+  repeat 20 [go]
+  show sum [score] of turtles with [breed = frankensteins1]
+  repeat 200 [go]
+  ask turtle-set breed-list frankensteins1 [set active? false]
+  ;ask turtle-set breed-list benevolents [set active? true]
+  ;repeat 10 [go]
+  ask turtle-set breed-list frankensteins2 [set active? true]
+  ;ask turtle-set breed-list benevolents [set active? false]
+  repeat 20[go]
+  show sum [score] of turtles with [breed = frankensteins2]
+  repeat 200 [go]
+end
+

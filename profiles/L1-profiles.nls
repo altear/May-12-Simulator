@@ -1,0 +1,38 @@
+;PROFILE 1 uses random top-k
+;PROFILE 2 uses popular top-k
+
+
+;All profiles use the following strategies:
+;    LIKE:  like-tag
+;    SCORE: score-new
+
+breed [profiles1 profile1]
+breed [profiles2 profile2]
+
+profiles1-own [max-k]
+profiles2-own [max-k]
+
+to profiles-setup [active-turtle k tag-count tag-list]
+  turtles-layout ;Standard layout
+  set score 0
+  set turns 0
+  set max-k k
+  set document? false
+  set active? true
+  set tags n-of tag-count tag-list
+end
+
+to profiles1-go [active-turtle]
+  let topk topk-random active-turtle ([max-k] of active-turtle)  
+  let like-list (like-tag active-turtle topk)
+  ask active-turtle [set score score + score-new active-turtle topk like-list]
+  ask active-turtle [create-links-with turtle-set like-list] 
+end
+
+to profiles2-go [active-turtle]
+  let topk topk-popularity active-turtle ([max-k] of active-turtle)  
+  let like-list (like-tag active-turtle topk)
+  ask active-turtle [set score score + score-new active-turtle topk like-list]
+  ask active-turtle [create-links-with turtle-set like-list] 
+end
+

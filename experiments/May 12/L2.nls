@@ -1,0 +1,24 @@
+;Testing: random vs popular top-k strategies, this time the top-k will exclude files that are already liked
+
+;Expected: random still ahead, but popular-topk peers will be closer. popular top-k peers still risk their lists freezing if they like no new files
+
+;Results: much closer than in L1 despite both strategies being made more dynamic. Probably because random-topk benefits much less and popular top-k from the increased dynamics.
+
+__includes [
+  "../../profiles/L2-profiles.nls"
+]
+
+to L2
+  let t-list n-values 2 [?]
+  let t-count 1
+  let k 5
+  
+  setup
+  
+  create-profiles1 10 [profiles-setup self k t-count t-list set color red]
+  create-profiles2 10 [profiles-setup self k t-count t-list set color cyan]
+  create-documents 20 [documents-setup self k t-count t-list set color grey]
+  
+  my-layout
+end
+

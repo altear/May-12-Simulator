@@ -1,0 +1,44 @@
+
+to-report topk-popularity [active-turtle k]
+  ;; Sort documents by how many links they have
+  let topk sort-on [count link-neighbors] turtles with [document?]
+  set topk sort-by > topk
+  
+  ifelse length topk > k
+  [report sublist topk 0 (k - 1)]
+  [report topk]
+end
+
+
+to-report topk-random [active-turtle k]
+  let topk n-of k turtles with [document?]
+  set topk sort topk
+  ifelse length topk > k
+  [report sublist topk 0 (k - 1)]
+  [report topk]
+end
+
+
+to-report topk-newPopularity [active-turtle k]
+  let topk sort-on [count link-neighbors] turtles with [document?]
+  set topk sort-by > topk
+  
+  ask active-turtle [ask link-neighbors [if member? self topk [set topk remove self topk]]] 
+  
+  
+  ifelse length topk > k
+  [report sublist topk 0 (k - 1)]
+  [report topk]
+end
+
+
+to-report topk-newRandom [active-turtle k]
+  let topk n-of k turtles with [document?]
+  set topk sort topk
+  
+  ask active-turtle [ask link-neighbors [if member? self topk [set topk remove self topk]]]
+  
+  ifelse length topk > k
+  [report sublist topk 0 (k - 1)]
+  [report topk]
+end
